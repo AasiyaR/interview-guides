@@ -39,7 +39,7 @@ The JVM is responsible for executing Java bytecode. The JVM is a virtual machine
 
 - Interpreter
 - JIT Compiler : Compiles bytecode to Machine code.
-- GC System.GC() Garbage blah blah
+- GC (System.GC();)
 - Java Native Interface : Is a bridge that permit supporting packages for other programming languages like C/C++.
 
 ###### JVM languages
