@@ -186,7 +186,9 @@ A "reference type" refers to the data type that represents references to objects
 - They are used to initialize the state of the object.
 - Constructors have the same name as the class and do not have a return type, not even void.
 - The need for constructors in Java arises from the fact that objects of a class may require some initial setup or state initialization before they can be used
-
+- All access modifiers are allowed (private , public, protected, default).
+- It cannot have any non access modifiers (final ,static, abstract,synchronized etc)
+  
 Object Initialization:
 
 ```java
@@ -301,7 +303,7 @@ class Parent{
 class Child extends Parent{
     void display(){
         super.display();
-        System.out.println("Parent");
+        System.out.println("Child");
     }
 }
 
