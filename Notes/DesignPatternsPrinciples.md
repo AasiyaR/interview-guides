@@ -186,12 +186,16 @@ class Switch {
 - Architectural Patterns
 - Concurrency Patterns
 
+## **Creational Pattern**
+- A creational design pattern deals with the process of object creation in software development.
+- Creational patterns abstract the instantiation process, making the system independent of how its objects are created, composed, and represented.
+
 ## **Singleton Pattern**
 
 - Singleton pattern is a creational design pattern
 - It restricts the instantiation of a class to ensure that there is only one instance of that class in the entire application.
 - It guarantees to provide a global point of access to that instance.
-- Singleton pattern is often used to control access to a resource, manage a shared resource, or maintain a single point of control, such as a configuration manager or a connection pool.
+- Singleton pattern is often used to control access to a resource, manage a shared resource, or maintain a single point of control, such as a configuration manager or a connection pool (Database connections, Logger instances).
 - Key characteristics
 
   - Private Constructor: The Singleton class has a private constructor, preventing external code from creating instances of the class directly.
@@ -247,6 +251,34 @@ class Switch {
   }
 
   ```
+
+## **Builder Pattern**
+- Builder Pattern is a creational design pattern.
+- It separates the construction of a complex object from its representation and allows the same construction process to create different representations.
+- The key idea is to separate the construction of a complex object from its representation.
+- This pattern extract the object construction code out of its own class and move it to separate objects called `builders`.
+- If we don't use Builder pattern we will have to create many parameterized constructors that leads to ugly code depending on the number of objects.
+- They are primarily used for building complex objects step by step.
+- Product class - `Car.java`
+    - Represents a car with various attributes like brand, model, color, etc.
+    - It's the final product that we want to build using the Builder pattern.
+- Builder Interface - `Builder.java`
+    - Declares a set of methods that concrete builders must implement to construct a complex object step by step.
+    - It acts as a contract, ensuring that any class implementing it knows how to build different parts of the final object.
+- ProductBuilder(Concrete Builder) Class - `CarBuilder.java`
+    - Implements the Builder interface to build a Product object.
+    - Keeps track of the details of the car being constructed. Each method (like brand, model, etc.) sets a specific attribute of the car, and the build method creates the final `Car` object.
+- ProductSchema Class - `CarSchema.java`
+    - Represents a different type of object with a similar structure to a product.
+    - Illustrates that the Builder pattern is flexible and can be used to build various types of objects with a similar construction process.
+- ProductSchemaBuilder(Concrete Builder) Class - `CarSchemaBuilder.java`
+    - Implements the Builder interface to build a `ProductSchema` object.
+    - Similar to `CarBuilder`, but it constructs a different type of object (CarSchema). It sets attributes specific to CarSchema.
+- Director Class - `Director.java`
+    - Guides the construction process by calling the builder methods in a specific order.
+    - Acts as a supervisor, providing a set of predefined steps to construct different types of objects. It abstracts the building process from the client.
+- MainApp Class
+    - Demonstrates how to use the Builder pattern to construct objects.
 
 ## **Factory Method Pattern**
 
@@ -321,7 +353,7 @@ public class FactoryMethodExample {
 
 - Prototype Pattern is a creational design pattern.
 - It is used to create objects by copying an existing object, known as the "prototype."
-- This pattern is particularly useful when the cost of creating an object is more expensive than copying an existing object.
+- This pattern is particularly useful when the cost of creating an object is more expensive than copying an existing object i.e., useful when the cost of creating a new instance is more expensive.
 - The Prototype pattern allows you to create new objects by cloning an existing instance, and it's based on the concept of creating new objects by copying an existing one.
 
 ```java
