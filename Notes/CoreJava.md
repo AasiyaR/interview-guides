@@ -179,6 +179,16 @@ public class MainClass {
 
 A "reference type" refers to the data type that represents references to objects rather than the objects themselves. This is in contrast to "primitive types," which directly store the values they represent.
 
+## **Call by Value**
+- In call by value, a copy of the actual parameter's value is passed to the method or function.
+- The method works with this copy, and any modifications made to the parameter inside the method do not affect the original value outside the method.
+- Java always uses call by value for passing arguments to methods.
+
+## **Call by Reference**
+- In call by reference, a reference to the actual parameter (memory address or pointer) is passed to the method or function.
+- Any modifications made to the parameter inside the method will affect the original value outside the method.
+- Some programming languages, such as C and C++, support call by reference.
+
 ## **Literals**
 
 - literal is a representation of a fixed value that is expressed in the source code of a program
@@ -583,6 +593,7 @@ String s3 = new String("Hello"); // Creates a new string object "Hello" outside 
 #### Static Variables
 - They are also known as Class Variables, they are shared by all instances of a class. 
 - They are initialized only once when the class is loaded, and any changes to them are reflected across all instances of the class.
+- The concept of call by value or call by reference does not apply to static fields, as they are not passed as arguments to methods. Instead, they are accessed directly by their class name.
 
 ```java
 public class MyClass {
@@ -766,6 +777,11 @@ public final class ImmutablePerson {
 
 - `finally` keyword is used to define a block of code that will be executed after a try block, whether an exception is thrown or not. It is often used to perform cleanup operations like closing a file or releasing a resource that was opened in the try block.
 
+#### How to exit finally block
+- If the `System.exit()` method is called inside the try or catch block, the JVM terminates and finally block won't be executed.
+- Using return statement in the try block.
+- Throwing another exception from the try block using `throw`.
+
 ## **finalize()**
 
 - `finalize()` is a method in Java that is called by the garbage collector when an object is no longer being used and is about to be garbage collected.
@@ -773,9 +789,28 @@ public final class ImmutablePerson {
 - The `finalize()` method is defined in the Object class, so all classes in Java have a `finalize()` method inherited from Object. By default, the `finalize()` method does nothing, so if a class needs to perform cleanup operations, it should override this method.
 - `finalize()` has been deprecated since Java 9. It is recommended to use try-catch-finally or try-with resources or `Autocloseable` interface instead.
 
-## **Exception
+## **Exception**
 - Exception class is the superclass of all checked exceptions. It represents exceptional conditions that can be handled programmatically, such as I/O errors, network errors, and application-specific errors. Subclasses of Exception include `IOException`, `SQLException`, and `RuntimeException`.
 - The parent class of the Exception class and Error class in Java is the Throwable class.
+
+#### Exception Hierarchy
+- The hierarchy in the catch block refers to the order in which catch blocks are organized to handle exceptions. 
+- When an exception occurs in a try block, Java searches for an appropriate catch block to handle the exception based on the hierarchy of catch blocks.
+- The hierarchy in the catch block follows a bottom-up approach, meaning that catch blocks for subclasses of exceptions should be placed before catch blocks for their superclass. 
+- This ensures that more specific exceptions are handled before more general exceptions.
+
+```java
+try {
+    // Code that may throw exceptions
+} catch (FileNotFoundException e) {
+    // Handle FileNotFoundException
+} catch (IOException e) {
+    // Handle IOException
+} catch (Exception e) {
+    // Handle other exceptions
+}
+
+```
 
 ## **Exception handling**
 
@@ -785,7 +820,6 @@ public final class ImmutablePerson {
 - The try block contains the code that may cause an exception, and the catch block handles the exception if it occurs.
 
 ```java
-
 try {
     // Code that may cause an exception
     int result = 10 / 0;
@@ -796,7 +830,6 @@ try {
     // Code that will always be executed
     System.out.println("Done!");
 }
-
 ```
 
 ## **Checked Exceptions (Compile-Time Exceptions)**
@@ -1521,6 +1554,24 @@ public class Main {
     }
 }
 ```
+## **Function**
+- The Function interface represents a single function that accepts one argument and produces a result.
+-  It is a functional interface and is widely used in functional programming paradigms introduced in Java 8.
+- The Function interface has a single abstract method called `apply`, which takes an argument of a specified type and returns a result of another specified type.
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Define a Function to convert a String to its length
+        Function<String, Integer> strLengthFunction = (str) -> str.length();
+
+        // Apply the Function to get the length of a string
+        int length = strLengthFunction.apply("Hello, World!");
+        System.out.println("Length of the string: " + length); // Output: Length of the string: 13
+    }
+}
+```
+
+
 ## **Default method**
 - It is a method defined within an interface that provides a default implementation
 - Default methods support the evolution of interfaces over time. As the requirements of an interface change, new methods can be added with default implementations, allowing for a more flexible and extensible design.
@@ -1772,6 +1823,30 @@ public class PredicateExample {
         numbers.stream()
                .filter(isEven)
                .forEach(num -> System.out.println(num));
+    }
+}
+
+```
+
+## **Consumer Interface**
+- Consumer interface is a functional interface that represents an operation that accepts a single input argument and returns no result.
+- The Consumer interface contains a single abstract method called `accept`, which takes a single argument of a specified type and performs some operation on it.
+- Consumer can be used in lambda expressions or method references to define actions or behaviors that operate on objects of a specified type.
+
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+
+        // Using Consumer interface with lambda expression
+        Consumer<String> printName = (name) -> System.out.println(name);
+
+        // Iterating over the list and applying the consumer action to each element
+        names.forEach(printName);
     }
 }
 
@@ -3046,19 +3121,17 @@ nosql database
 java 8
 @SpringBootApplication: It is a combination of three annotations @EnableAutoConfiguration, @ComponentScan, and @Configuration
 the exception hierarchy
-whether finally block is called all the time
 how to improve speed of rest api endpoint
-Consumer interface
 filters in springboot
-parent class of exception
 can we override a private method
 how to read .properties file values in spring boot application
 idempotent in java
 function v/s predicate
 what is the annotation used to call multiple rest endpoint simultaneously in spring boot
-call by value and call by reference
 can we create private static?
 @bean annotation
 many to many mapping using springboot and hibernate
 spring batch
 spring jms
+How to fix latency in microservices, How to analyse this, How to fix, Why it happens, Circuit Breaker
+Heap Area v/s Stack Area
